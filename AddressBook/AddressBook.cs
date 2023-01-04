@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace AddressBookDay23
 
         public Dictionary<Contact, string> cityDictionary = new Dictionary<Contact, string>();
         public Dictionary<Contact, string> stateDictionary = new Dictionary<Contact, string>();
+
         public void CreateContact(string firstName, string lastName, string address, string city, string state, string email, int zip, long phoneNum, string BookName)
         {
             Contact contact = new Contact(firstName, lastName, address, city, state, email, zip, phoneNum);
@@ -70,22 +72,22 @@ namespace AddressBookDay23
                     switch (option)
                     {
                         case 1:
-                            Console.WriteLine("Enter the MOdifed Value");
+                            Console.WriteLine("Enter the Modifed Value");
                             string FName = Console.ReadLine();
                             item.Value.FirstName = FName;
                             break;
                         case 2:
-                            Console.WriteLine("Enter the MOdifed Value");
+                            Console.WriteLine("Enter the Modifed Value");
                             string LName = Console.ReadLine();
                             item.Value.LasTName = LName;
                             break;
                         case 3:
-                            Console.WriteLine("Enter the MOdifed Value");
+                            Console.WriteLine("Enter the Modifed Value");
                             string Add = Console.ReadLine();
                             item.Value.Address = Add;
                             break;
                         case 4:
-                            Console.WriteLine("Enter the MOdifed Value");
+                            Console.WriteLine("Enter the Modifed Value");
                             string city = Console.ReadLine();
                             item.Value.City = city;
                             break;
@@ -100,12 +102,12 @@ namespace AddressBookDay23
                             item.Value.Zip = ZipN;
                             break;
                         case 7:
-                            Console.WriteLine("Enter the MOdifed Value");
+                            Console.WriteLine("Enter the Modifed Value");
                             string MailID = Console.ReadLine();
                             item.Value.Email = MailID;
                             break;
                         case 8:
-                            Console.WriteLine("Enter the MOdifed Value");
+                            Console.WriteLine("Enter the Modifed Value");
                             long PhnNum = Convert.ToInt64(Console.ReadLine());
                             item.Value.PhoneNum = PhnNum;
                             break;
@@ -125,7 +127,7 @@ namespace AddressBookDay23
             }
             else
             {
-                Console.WriteLine("Not found Try Again");
+                Console.WriteLine("Not Found Try Again");
             }
         }
         public void AddAddressBook(string BookName)
@@ -159,39 +161,33 @@ namespace AddressBookDay23
         }
         public void SearchPersonByCity(string city)
         {
-            foreach (AddressBook addressbookobj in addressBookDictionary.Values)
+            foreach (AddressBook addressbookObj in addressBookDictionary.Values)
             {
                 CreateCityDictionary();
-                List<Contact> contactList = GetListOfDictionaryKeys(addressbookobj.cityDictionary);
+                List<Contact> contactList = GetListOfDictionaryKeys(addressbookObj.cityDictionary);
                 foreach (Contact contact in contactList.FindAll(c => c.City.Equals(city)).ToList())
                 {
                     Console.WriteLine(contact.ToString);
                 }
             }
         }
-
-        private List<Contact> GetListOfDictionaryKeys(Dictionary<Contact, string> cityDictionary)
-        {
-            throw new NotImplementedException();
-        }
-
         public void CreateCityDictionary()
         {
-            foreach (AddressBook addressbookobj in addressBookDictionary.Values)
+            foreach (AddressBook addressbookObj in addressBookDictionary.Values)
             {
-                foreach (Contact contact in addressbookobj.addressBook.Values)
+                foreach (Contact contact in addressbookObj.addressBook.Values)
                 {
-                    addressbookobj.cityDictionary.Add(contact, contact.City);
+                    addressbookObj.cityDictionary.Add(contact, contact.City);
                 }
             }
         }
-        public void SearchPersonByState(string state, object? city)
+        public void SearchPersonByState(string state)
         {
             foreach (AddressBook addressbookobj in addressBookDictionary.Values)
             {
                 CreateCityDictionary();
                 List<Contact> contactList = GetListOfDictionaryKeys(addressbookobj.stateDictionary);
-                foreach (Contact contact in contactList.FindAll(c => c.City.Equals(city)).ToList())
+                foreach (Contact contact in contactList.FindAll(c => c.State.Equals(state)).ToList())
                 {
                     Console.WriteLine(contact.ToString);
                 }
@@ -207,10 +203,17 @@ namespace AddressBookDay23
                 }
             }
         }
-
-        internal void SearchPersonByState(string? v)
+        public List<Contact> GetListOfDictionaryKeys(Dictionary<Contact, String> contact)
         {
-            throw new NotImplementedException();
+            List<Contact> contactList = new List<Contact>();
+            foreach (var contactKey in contact.Keys)
+            {
+                contactList.Add(contactKey);
+            }
+            return contactList;
         }
+
+
+
     }
 }
