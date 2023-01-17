@@ -58,7 +58,9 @@ namespace AddressBook
                 }
                 else
                 {
+                    ForegroundColor = ConsoleColor.Red;
                     WriteLine("Name Does not exist");
+                    ResetColor();
                     break;
                 }
             }
